@@ -19,12 +19,12 @@ ll binpow(ll a, ll b) {
 
     ll half = b / 2;
     ll pow_half = binpow(a, half);
-    ll ans = (pow_half * pow_half) % MOD;
+    ll pow = (pow_half * pow_half) % MOD;
     if (b % 2) {
-        ans = (ans * a) % MOD;
+        pow = (pow * a) % MOD;
     }
 
-    return ans;
+    return pow;
 }
 
 void solve() {
