@@ -27,10 +27,6 @@ ll binpow(ll a, ll b) {
     return ans;
 }
 
-ll mod_inv(ll a) {
-    return binpow(a, MOD - 2);
-}
-
 void solve() {
     ll l, r, k;
     cin >> l >> r >> k;
