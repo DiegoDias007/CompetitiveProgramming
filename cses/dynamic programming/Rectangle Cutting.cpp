@@ -15,7 +15,7 @@ void solve() {
     cin >> a >> b;
     
     // dp[n][m]: min number of cuts necessary to break
-    // a rectangle into squares
+    // a (n x m) rectangle into squares
     vector<vector<int>> dp(a + 1, vector<int>(b + 1, 1e9));
     for (int i = 0; i <= min(a, b); i++) dp[i][i] = 0;
     for (int n = 1; n <= a; n++) {
