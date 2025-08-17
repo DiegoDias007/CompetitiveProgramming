@@ -1,0 +1,59 @@
+// https://cses.fi/problemset/task/1668/
+
+#include <bits/stdc++.h>
+
+#define endl '\n'
+typedef long long ll;
+using namespace std;
+
+template <typename T>T gcd(T a, T b) {if (b == 0) return a; return gcd(b, a % b);}
+template <typename T> T lcm(T a, T b) {return (a * b) / gcd(a, b);}
+template <typename K> void print_vec(const vector<K>& vec) {for(size_t i = 0; i < vec.size(); ++i) {cout << vec[i];if(i != vec.size() - 1) {cout << " ";}}cout << endl;}
+
+void dfs(vector<vector<int>>& adj, vector<int>& vis, vector<int>& color, int u) {
+    if (vis[u]) return;
+    vis[u] = true;
+    for (auto child : adj[u]) {
+        if (!vis[child]) {
+            color[child] = 3 - color[u];
+            dfs(adj, vis, color, child);
+        } else if (color[u] == color[child]) {
+            cout << "IMPOSSIBLE" << endl;
+            exit(0);
+        }
+    }
+}
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<int>> adj(n);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u-1].push_back(v-1);
+        adj[v-1].push_back(u-1);
+    }
+
+    vector<int> vis(n);
+    vector<int> color(n);
+    for (int u = 0; u < n; u++) {
+        if (!vis[u]) {
+            color[u] = 1;
+            dfs(adj, vis, color, u);
+        }
+    }
+    print_vec(color);
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    int t = 1;
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
