@@ -1,0 +1,57 @@
+// https://codeforces.com/contest/1985/problem/F
+
+#include <bits/stdc++.h>
+
+#define endl '\n'
+typedef long long ll;
+using namespace std;
+
+template <typename T>T gcd(T a, T b) {if (b == 0) return a; return gcd(b, a % b);}
+template <typename T> T lcm(T a, T b) {return (a * b) / gcd(a, b);}
+template <typename K> void print_vec(const vector<K>& vec) {for(size_t i = 0; i < vec.size(); ++i) {cout << vec[i];if(i != vec.size() - 1) {cout << " ";}}cout << endl;}
+
+void solve() {
+    ll h, n;
+    cin >> h >> n;
+    vector<ll> a(n), c(n);
+    for (ll i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    for (ll i = 0; i < n; i++) {
+        cin >> c[i];
+    }
+
+    ll l = 1, r = 1e11;
+    ll best = -1;
+    while (l <= r) {
+        ll turns = (l + r) / 2;
+        ll damage = 0;
+        for (ll i = 0; i < n; i++) {
+            ll n_attacks = (turns - 1) / c[i] + 1;
+            damage += n_attacks * a[i];
+            if (damage >= h) break;
+        }
+        bool ok = damage >= h;
+        if (ok) {
+            r = turns - 1;
+            best = turns;
+        } else {
+            l = turns + 1;
+        }
+    }
+    cout << best << endl;
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    int t;
+    cin >> t; 
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
