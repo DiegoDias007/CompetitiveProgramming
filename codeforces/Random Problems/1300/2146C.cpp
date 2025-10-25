@@ -1,0 +1,59 @@
+// https://codeforces.com/contest/2146/problem/C
+
+#include <bits/stdc++.h>
+
+#define endl '\n'
+typedef long long ll;
+using namespace std;
+
+template <typename T>T gcd(T a, T b) {if (b == 0) return a; return gcd(b, a % b);}
+template <typename T> T lcm(T a, T b) {return (a * b) / gcd(a, b);}
+template <typename K> void print_vec(const vector<K>& vec) {for(size_t i = 0; i < vec.size(); ++i) {cout << vec[i];if(i != vec.size() - 1) {cout << " ";}}cout << endl;}
+
+void solve() {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    bool ok = true;
+    int cnt = 0;
+    for (int i = 0; i < n; i++) {
+        if (s[i] == '0') cnt++;
+        if (s[i] == '1' || i == n - 1) ok &= cnt != 1;
+        if (s[i] == '1') cnt = 0;
+    }
+
+    if (!ok) {
+        cout << "NO" << endl;
+        return;
+    }
+
+    vector<int> a(n);
+    iota(a.begin(), a.end(), 1);
+    int last = -1;
+    for (int i = 0; i < n; i++) {
+        if ((s[i] == '1' || i == n - 1) && last != -1) {
+            reverse(a.begin() + last, a.begin() + i + (i == n - 1 && s[i] == '0'));
+            last = -1;
+        }
+        
+        if (s[i] == '0' && last == -1) last = i;
+    }
+    
+    cout << "YES" << endl;
+    print_vec(a);
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
+    int t;
+    cin >> t; 
+    while (t--) {   
+        solve();
+    }
+    
+    return 0;
+}
