@@ -21,25 +21,19 @@ void solve() {
     for (auto v : ipt) a.push_back(v);
     n = a.size();
 
+    auto place = [&](vector<int>& cur, int pos, int mx) {
+        while (pos <= x && pos <= mx && cur.size() < k) {
+            cur.push_back(pos);
+            pos++;
+        }
+    };
+
     auto ok = [&](vector<int>& cur, int mid) -> bool {
-        int pos = 0;
-        while (pos <= x && a[0] - pos >= mid && cur.size() < k) {
-            cur.push_back(pos);
-            pos++;
-        }
-
-        pos = a.back() + mid;
-        while (pos <= x && cur.size() < k) {
-            cur.push_back(pos);
-            pos++;
-        }
-
+        place(cur, 0, a[0] - mid);
+        place(cur, a.back() + mid, x);
         for (int i = 0; i < n - 1; i++) {
             int pos = a[i] + mid;
-            while (pos <= x && a[i + 1] - pos >= mid && cur.size() < k) {
-                cur.push_back(pos);
-                pos++;
-            }
+            place(cur, pos, a[i + 1] - mid);
         }
         return cur.size() == k;
     };
